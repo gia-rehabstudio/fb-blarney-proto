@@ -8,56 +8,63 @@
     </head>
     <body>
         <!-- Load Facebook SDK for JavaScript -->
-        <div id="fb-root"></div>
         <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId            : '143775063114717',
-            autoLogAppEvents : true,
-            xfbml            : true,
-            version          : 'v2.12'
-          });
-        };
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId            : '143775063114717',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v2.12'
+              });
 
-        (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
+              FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                  console.log('Logged in.');
+                }
+                else {
+                  FB.login();
+                }
+              });
+              function checkLoginState() {
+                  FB.getLoginStatus(function(response) {
+                    statusChangeCallback(response);
+                  });
+                }
+            };
 
-        <!-- <script>
-          window.fbAsyncInit = function() {
-            FB.init({
-              appId            : '143775063114717',
-              autoLogAppEvents : true,
-              xfbml            : true,
-              version          : 'v2.12'
-            });
-          };
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = 'https://connect.facebook.net/en_US/sdk.js';
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
 
-          (function(d, s, id){
-             var js, fjs = d.getElementsByTagName(s)[0];
-             if (d.getElementById(id)) {return;}
-             js = d.createElement(s); js.id = id;
-             js.src = "https://connect.facebook.net/en_US/sdk.js";
-             fjs.parentNode.insertBefore(js, fjs);
-           }(document, 'script', 'facebook-jssdk'));
-        </script> -->
+        <div id="fb-root"></div>
+        <fb:login-button
+          scope="public_profile,email"
+          onlogin="checkLoginState();">
+        </fb:login-button>
+
+        <h1>Blarney/FB prototype for bot Mia</h1>
+
 
         <!-- Your customer chat code -->
 
+        <div class="fb-messengermessageus"
+          messenger_app_id="143775063114717"
+          page_id="563876683985353"
+          color="white"
+          size="large">
+        </div>
+
         <div class="fb-customerchat"
          page_id="563876683985353"
-         ref="<OPTIONAL_WEBHOOK_PARAM>"
-         theme_color="<HEX_COLOR_CODE>"
+         ref="messaging_postbacks"
+         theme_color="#F5F5F5"
          logged_in_greeting="hello there"
          logged_out_greeting="bye!">
         </div>
-
-
-        <h1>haiiii</h1>
-
     </body>
 </html>
